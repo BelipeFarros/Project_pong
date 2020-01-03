@@ -5,12 +5,36 @@ import java.awt.Graphics;
 
 public class Player {
 	
+	public int x, y, width, height;
+	public boolean rigth, left;
+	
+	public Player(int x, int y) {
+		this.x = x;
+		this.y = y;
+		this.width = 40;
+		this.height = 10;
+	}
+	
 	public void tick() {
+		if(rigth) {
+			x++;
+		}else if(left) {
+			x--;
+		}
+		
+		if(x + width > Game.WIDTH) {
+			x = Game.WIDTH - this.width;
+		}
+		
+		if(x <= 0) {
+			x = 0;
+		}
+		
 		
 	}
 	
 	public void render(Graphics g) {
 		g.setColor(Color.gray);
-		g.fillRect(60 - 40/2, 220-20, 40, 10);
+		g.fillRect(x, y, width, height);
 	}
 }
