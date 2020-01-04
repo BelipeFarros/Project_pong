@@ -16,7 +16,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private static final long serialVersionUID = 1L;
 	
 	//Constants
-	public static int WIDTH = 120, HEIGHT = 220, SCALE = 3;
+	public static int WIDTH = 120, HEIGHT = 180, SCALE = 3;
 	
 	//
 	public BufferedImage layer = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
@@ -30,8 +30,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		this.addKeyListener(this);
-		player = new Player(Game.WIDTH/2 - 20, Game.HEIGHT - 20);
-		enemy = new Enemy(Game.WIDTH/2 - 20, 10);
+		player = new Player(Game.WIDTH/2 - 20, Game.HEIGHT - 10);
+		enemy = new Enemy(Game.WIDTH/2 - 20, 5);
 		ball = new Ball(Game.WIDTH/2, Game.HEIGHT/2);
 	}
 	
@@ -95,6 +95,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			player.rigth = true;
 		} else if(e.getKeyCode() == KeyEvent.VK_LEFT) {
 			player.left = true;
+		} else if(e.getKeyCode() == KeyEvent.VK_R) {
+			new Game();
 		}
 	}
 
