@@ -29,9 +29,11 @@ public class Ball {
 		if(x + dx*speed + width >= Game.WIDTH | x + dx*speed <= 0) dx*= -1;
 		
 		if(y >= Game.HEIGHT) {
-			//Enemy point
+			Game.enemy.point++;
+			makePoint();
 		}else if(y <= 0) {
-			//Player point
+			Game.player.point++;
+			makePoint();
 		}
 		
 		Rectangle bounds = new Rectangle((int)(x+(dx*speed)), (int)(y+(dy*speed)),width,height);
@@ -61,5 +63,14 @@ public class Ball {
 	public void render(Graphics g) {
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect((int)x, (int)y, width, height);
+	}
+	
+	private void makePoint() {
+		int angle = new Random().nextInt(135 - 45) + 45;
+		dx = Math.cos(Math.toRadians(angle));
+		dy = Math.sin(Math.toRadians(angle));
+		
+		this.x = Game.WIDTH/2;
+		this.y = Game.HEIGHT/2;
 	}
 }

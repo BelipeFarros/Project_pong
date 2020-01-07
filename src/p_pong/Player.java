@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 public class Player {
 	
-	public int x, y, width, height;
+	public int x, y, width, height, point;
 	public boolean rigth, left;
 	
 	public Player(int x, int y) {
@@ -13,6 +13,7 @@ public class Player {
 		this.y = y;
 		this.width = 40;
 		this.height = 5;
+		this.point = 0;
 	}
 	
 	public void tick() {
