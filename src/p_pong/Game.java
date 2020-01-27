@@ -17,9 +17,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private static final long serialVersionUID = 1L;
 	
 	//Constants
-	public static int WIDTH = 120, HEIGHT = 180, SCALE = 3;
+	public static int WIDTH = 160, HEIGHT = 240, SCALE = 2;
+	public static boolean inGame = false, running = false;
 	
-	//
+	
+	//Image
 	public BufferedImage layer = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 	
 	//Classes
@@ -53,9 +55,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	}
 	
 	public void tick() {
-		player.tick();
-		enemy.tick();
-		ball.tick();
+		if(inGame) {
+			player.tick();
+			enemy.tick();
+			ball.tick();
+		}
 	}
 	
 	public void render() {
@@ -67,14 +71,20 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		Graphics g = layer.getGraphics();
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
 		g.setFont(new Font("Arial", Font.BOLD,10));
 		g.setColor(Color.white);
-		String Ppoint = Integer.toString(Game.player.point);
-		String Epoint = Integer.toString(Game.enemy.point);
-		g.drawString(Ppoint + " X " + Epoint, WIDTH/2 - 10, HEIGHT/2);
+		if(inGame) {
+			String Ppoint = Integer.toString(Game.player.point);
+			String Epoint = Integer.toString(Game.enemy.point);
+			g.drawString(Ppoint + " X " + Epoint, WIDTH/2 - 10, HEIGHT/2);
+		} else {
+			g.drawString("Press space to start", WIDTH/2 - 45, HEIGHT/2);
+		}
+		
 		player.render(g);
 		enemy.render(g);
-		ball.render(g);
+		if(inGame) ball.render(g);
 		
 		g = bs.getDrawGraphics();
 		g.drawImage(layer, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);
@@ -103,6 +113,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			player.left = true;
 		} else if(e.getKeyCode() == KeyEvent.VK_R) {
 			new Game();
+		}
+		
+		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			if(inGame) inGame = false;
+			else inGame = true;
 		}
 	}
 

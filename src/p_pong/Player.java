@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class Player {
 	
 	public int x, y, width, height, point;
-	public boolean rigth, left;
+	public boolean rigth, left, makePoint = false;
 	
 	public Player(int x, int y) {
 		this.x = x;

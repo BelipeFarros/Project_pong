@@ -26,13 +26,16 @@ public class Ball {
 	
 	public void tick() {
 		
+		//Inverter quando bate na parede
 		if(x + dx*speed + width >= Game.WIDTH | x + dx*speed <= 0) dx*= -1;
 		
 		if(y >= Game.HEIGHT) {
 			Game.enemy.point++;
+			Game.player.makePoint = true;
 			makePoint();
 		}else if(y <= 0) {
 			Game.player.point++;
+			Game.enemy.makePoint = true;
 			makePoint();
 		}
 		
@@ -41,7 +44,15 @@ public class Ball {
 		Rectangle boundsEnemy = new Rectangle((int)Game.enemy.x,(int)Game.enemy.y,Game.enemy.width,Game.enemy.height);
 		
 		if(bounds.intersects(boundsPlayer)) {
-			int angle = new Random().nextInt(135 - 45) + 45;
+			int angle = 0;
+			if(Game.player.rigth) {
+				angle = new Random().nextInt(15) + 45;
+			} else if(Game.player.left){
+				angle = 135 - new Random().nextInt(15);
+			} else {
+				angle = new Random().nextInt(135 - 45) + 45;
+			}
+			
 			
 			dx = Math.cos(Math.toRadians(angle));
 			dy = Math.sin(Math.toRadians(angle));
@@ -68,9 +79,23 @@ public class Ball {
 	private void makePoint() {
 		int angle = new Random().nextInt(135 - 45) + 45;
 		dx = Math.cos(Math.toRadians(angle));
-		dy = Math.sin(Math.toRadians(angle));
+		if(Game.player.makePoint) dy = Math.sin(Math.toRadians(angle)) * -1;
+		else if(Game.enemy.makePoint) dy = Math.sin(Math.toRadians(angle));
+		
+		Game.player.makePoint = false;
+		Game.enemy.makePoint = false;
 		
 		this.x = Game.WIDTH/2;
 		this.y = Game.HEIGHT/2;
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Game.player.x = Game.WIDTH/2 - 20;
+		Game.enemy.x = Game.player.x;
 	}
 }

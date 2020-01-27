@@ -7,6 +7,7 @@ public class Enemy {
 	
 	public double x,y;
 	public int width, height, point;
+	public boolean makePoint = false;
 	
 	public Enemy(int x, int y) {
 		this.x = x;
@@ -17,7 +18,7 @@ public class Enemy {
 	}
 	
 	public void tick() {
-		x += (Game.ball.x - x - 6) * 0.1;
+		x += (Game.ball.x - x - 6) * 0.5;
 		
 		if(x + width > Game.WIDTH) {
 			x = Game.WIDTH - this.width;
